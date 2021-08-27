@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <script>
+
+     
+    </script>    
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Conselhos</title>
+</head>
+
+<body>
+<h2>Em momentos difíceis, solite um conselho!</h2>
+<button type="button" style="padding-left: 45px; padding-right: 45px;" class="btn btn-secondary" onclick="chamaConselhos();">Conselho</button>
+<p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Conselhos</th>
+            </tr>
+        </thead>
+        <tbody id="tableData">
+        </tbody>
+    </table>
+</p>
+<canvas id="meuCanvas" width="400" height="400"></canvas>
+<script>
+
+function chamaConselhos() {
+            let URL = "https://api.adviceslip.com/advice"
+        
+            fetch(URL)
+                .then(req => req.json())
+                .then(show => { console.log(show); fillTable(show);})
+        
+        }
+        
+        function fillTable(tableData) {
+        
+            const tbodyTag = document.getElementById("tableData");
+        
+            for(var item in tableData.slip) {
+                if(item !="id"){
+                    let trTag = document.createElement("tr");
+                    let tdTagValor = document.createElement("td");
+
+                    tdTagValor.innerHTML = tableData.slip[item];
+                    trTag.appendChild(tdTagValor);
+            
+                    tbodyTag.appendChild(trTag);
+                }
+               
+            }
+        }
+        
+
+ var canvas = document.getElementById('meuCanvas');
+ var pincel = canvas.getContext('2d');
+
+var ctx = document.getElementById('myChart');
+var myChart = new Chart(pincel, {
+    type: 'bar',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+</body>
+</html>
